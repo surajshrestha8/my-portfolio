@@ -5,16 +5,16 @@ import * as THREE from "three";
 
 const Hero = () => {
   const hero3DRef = useRef<HTMLDivElement>(null);
-  
+
   // Animated typing effect
   useEffect(() => {
     const typingElement = document.querySelector(".typing-text");
     if (!typingElement) return;
-    
-    const text = "Creative Developer";
+
+    const text = "Next JS Developer";
     let currentText = "";
     let letterIndex = 0;
-    
+
     const typeWriter = () => {
       if (letterIndex < text.length) {
         currentText += text.charAt(letterIndex);
@@ -25,31 +25,31 @@ const Hero = () => {
         setTimeout(typeWriter, 100);
       }
     };
-    
+
     setTimeout(typeWriter, 1000);
   }, []);
-  
+
   // Simple 3D hero animation with Three.js
   useEffect(() => {
     if (!hero3DRef.current) return;
-    
+
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
-    
+
     const renderer = new THREE.WebGLRenderer({
       alpha: true,
       antialias: true,
     });
-    
+
     renderer.setSize(
-      hero3DRef.current.clientWidth, 
-      hero3DRef.current.clientHeight
+      hero3DRef.current.clientWidth,
+      hero3DRef.current.clientHeight,
     );
     hero3DRef.current.appendChild(renderer.domElement);
-    
+
     // Create a sphere geometry
     const geometry = new THREE.SphereGeometry(2, 64, 64);
-    
+
     // Create a material with custom shader
     const material = new THREE.ShaderMaterial({
       vertexShader: `
@@ -83,90 +83,96 @@ const Hero = () => {
       transparent: true,
       wireframe: true,
     });
-    
+
     const sphere = new THREE.Mesh(geometry, material);
     scene.add(sphere);
-    
+
     camera.position.z = 5;
-    
+
     // Animation loop
     const clock = new THREE.Clock();
-    
+
     const animate = () => {
       requestAnimationFrame(animate);
-      
+
       const elapsedTime = clock.getElapsedTime();
       material.uniforms.time.value = elapsedTime;
-      
+
       sphere.rotation.x = elapsedTime * 0.1;
       sphere.rotation.y = elapsedTime * 0.15;
-      
+
       renderer.render(scene, camera);
     };
-    
+
     animate();
-    
+
     // Handle window resize
     const handleResize = () => {
       if (!hero3DRef.current) return;
-      
+
       const newWidth = hero3DRef.current.clientWidth;
       const newHeight = hero3DRef.current.clientHeight;
-      
+
       camera.aspect = newWidth / newHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(newWidth, newHeight);
     };
-    
+
     window.addEventListener("resize", handleResize);
-    
+
     return () => {
       window.removeEventListener("resize", handleResize);
       if (hero3DRef.current) {
         hero3DRef.current.removeChild(renderer.domElement);
       }
-      
+
       geometry.dispose();
       material.dispose();
       renderer.dispose();
     };
   }, []);
-  
+
   const scrollToSection = (id: string) => {
     const element = document.querySelector(id);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
   };
-  
+
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section
+      id="hero"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+    >
       <div className="container mx-auto px-6 py-24 relative z-10">
         <div className="flex flex-col md:flex-row items-center justify-between">
           <div className="md:w-1/2 mb-10 md:mb-0 reveal">
             <h1 className="text-4xl md:text-6xl font-heading font-bold leading-tight mb-4">
               <span className="block">Hi, I'm</span>
-              <span className="gradient-text text-5xl md:text-7xl">Alex Johnson</span>
+              <span className="gradient-text text-5xl md:text-7xl">
+                Suraj Shrestha
+              </span>
             </h1>
-            
+
             <h2 className="text-2xl md:text-3xl text-muted-foreground font-heading mb-6">
               <span className="typing-text"></span>
             </h2>
-            
+
             <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-md">
-              I craft interactive experiences and digital solutions with modern web technologies and creative 3D visualizations.
+              I craft interactive experiences and digital solutions with modern
+              web technologies and creative 3D visualizations.
             </p>
-            
+
             <div className="flex space-x-4">
-              <Button 
+              <Button
                 size="lg"
                 className="bg-primary hover:bg-primary/90 text-white"
                 onClick={() => scrollToSection("#projects")}
               >
                 View My Work
               </Button>
-              
-              <Button 
+
+              <Button
                 size="lg"
                 variant="outline"
                 className="border-primary text-primary hover:bg-primary/10"
@@ -176,17 +182,17 @@ const Hero = () => {
               </Button>
             </div>
           </div>
-          
+
           <div className="md:w-1/2 reveal">
             {/* 3D Hero object container */}
-            <div 
+            <div
               ref={hero3DRef}
-              className="w-full aspect-square max-w-md mx-auto relative animate-float" 
+              className="w-full aspect-square max-w-md mx-auto relative animate-float"
               id="hero-3d-container"
             />
           </div>
         </div>
-        
+
         {/* Scroll indicator */}
         <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce">
           <span className="text-sm mb-2">Scroll Down</span>

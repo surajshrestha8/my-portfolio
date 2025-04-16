@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Moon, Sun } from "lucide-react";
-import { useTheme } from "@/contexts/ThemeContext";
+import { Menu, X } from "lucide-react";
+import SimpleThemeToggle from "./SimpleThemeToggle";
 
 const Navbar = () => {
   const [location] = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const { theme, toggleTheme, isAnimating } = useTheme();
   
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -83,38 +82,12 @@ const Navbar = () => {
           </ul>
           
           {/* Theme toggle in navbar */}
-          <Button 
-            variant="outline"
-            size="icon"
-            onClick={toggleTheme}
-            disabled={isAnimating}
-            className="bg-surface/80 backdrop-blur-sm transition-all duration-300 hover:bg-primary/20"
-            aria-label="Toggle theme"
-          >
-            {theme === 'dark' ? (
-              <Sun className="h-5 w-5 text-yellow-500" />
-            ) : (
-              <Moon className="h-5 w-5 text-indigo-500" />
-            )}
-          </Button>
+          <SimpleThemeToggle className="backdrop-blur-sm" />
         </div>
         
         {/* Mobile nav toggle */}
         <div className="md:hidden flex items-center gap-2">
-          <Button 
-            variant="outline"
-            size="icon"
-            onClick={toggleTheme}
-            disabled={isAnimating}
-            className="bg-surface/80 backdrop-blur-sm"
-            aria-label="Toggle theme"
-          >
-            {theme === 'dark' ? (
-              <Sun className="h-5 w-5 text-yellow-500" />
-            ) : (
-              <Moon className="h-5 w-5 text-indigo-500" />
-            )}
-          </Button>
+          <SimpleThemeToggle className="backdrop-blur-sm" />
           
           <Button 
             variant="ghost" 

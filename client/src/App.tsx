@@ -9,7 +9,6 @@ import Cursor from "./components/Cursor";
 import ScrollProgress from "./components/ScrollProgress";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import ThemeToggle from "./components/ThemeToggle";
 import { ThemeProvider } from "./contexts/ThemeContext";
 
 function Router() {
@@ -43,7 +42,6 @@ function App() {
         {!isMobile && <Cursor />}
         <ScrollProgress />
         <Navbar />
-        <ThemeToggle />
         <main>
           <Router />
         </main>

@@ -5,14 +5,12 @@ type Theme = "light" | "dark";
 interface ThemeContextType {
   theme: Theme;
   toggleTheme: () => void;
-  isAnimating: boolean;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<Theme>("dark");
-  const [isAnimating, setIsAnimating] = useState(false);
 
   useEffect(() => {
     // Check if theme is stored in localStorage
@@ -29,24 +27,14 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const toggleTheme = () => {
-    setIsAnimating(true);
-    
-    // We'll set a timer to actually change the theme after the animation has started
-    setTimeout(() => {
-      const newTheme = theme === "dark" ? "light" : "dark";
-      setTheme(newTheme);
-      document.documentElement.setAttribute("data-theme", newTheme);
-      localStorage.setItem("theme", newTheme);
-      
-      // Reset animation state after animation is complete (assuming 3s animation)
-      setTimeout(() => {
-        setIsAnimating(false);
-      }, 3000);
-    }, 500);
+    const newTheme = theme === "dark" ? "light" : "dark";
+    setTheme(newTheme);
+    document.documentElement.setAttribute("data-theme", newTheme);
+    localStorage.setItem("theme", newTheme);
   };
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme, isAnimating }}>
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
       {children}
     </ThemeContext.Provider>
   );
