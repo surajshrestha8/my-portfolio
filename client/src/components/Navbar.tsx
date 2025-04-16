@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Moon, Sun } from "lucide-react";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const Navbar = () => {
   const [location] = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const { theme, toggleTheme, isAnimating } = useTheme();
   
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -61,33 +63,67 @@ const Navbar = () => {
           <span className="text-primary">/&gt;</span>
         </a>
         
-        {/* Mobile nav toggle */}
-        <Button 
-          variant="ghost" 
-          size="icon" 
-          className="md:hidden" 
-          onClick={toggleMenu}
-        >
-          {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </Button>
-        
         {/* Desktop navigation */}
-        <ul className="hidden md:flex space-x-8 items-center">
-          {navLinks.map((link) => (
-            <li key={link.name}>
-              <a 
-                href={link.href}
-                className="hover:text-primary transition-colors duration-300"
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollToSection(link.href);
-                }}
-              >
-                {link.name}
-              </a>
-            </li>
-          ))}
-        </ul>
+        <div className="hidden md:flex items-center">
+          <ul className="flex space-x-8 items-center mr-4">
+            {navLinks.map((link) => (
+              <li key={link.name}>
+                <a 
+                  href={link.href}
+                  className="hover:text-primary transition-colors duration-300"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToSection(link.href);
+                  }}
+                >
+                  {link.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+          
+          {/* Theme toggle in navbar */}
+          <Button 
+            variant="outline"
+            size="icon"
+            onClick={toggleTheme}
+            disabled={isAnimating}
+            className="bg-surface/80 backdrop-blur-sm transition-all duration-300 hover:bg-primary/20"
+            aria-label="Toggle theme"
+          >
+            {theme === 'dark' ? (
+              <Sun className="h-5 w-5 text-yellow-500" />
+            ) : (
+              <Moon className="h-5 w-5 text-indigo-500" />
+            )}
+          </Button>
+        </div>
+        
+        {/* Mobile nav toggle */}
+        <div className="md:hidden flex items-center gap-2">
+          <Button 
+            variant="outline"
+            size="icon"
+            onClick={toggleTheme}
+            disabled={isAnimating}
+            className="bg-surface/80 backdrop-blur-sm"
+            aria-label="Toggle theme"
+          >
+            {theme === 'dark' ? (
+              <Sun className="h-5 w-5 text-yellow-500" />
+            ) : (
+              <Moon className="h-5 w-5 text-indigo-500" />
+            )}
+          </Button>
+          
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            onClick={toggleMenu}
+          >
+            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </Button>
+        </div>
       </div>
       
       {/* Mobile navigation menu */}

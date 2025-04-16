@@ -3,11 +3,87 @@
 @tailwind utilities;
 
 @layer base {
+  /* Light theme variables */
+  :root[data-theme="light"] {
+    --background: #f8f9fa;
+    --foreground: #1a1b1e;
+    --card: rgba(255, 255, 255, 0.8);
+    --card-foreground: #1a1b1e;
+    --popover: #ffffff;
+    --popover-foreground: #1a1b1e;
+    --primary: hsl(217, 100%, 61%);
+    --primary-foreground: #ffffff;
+    --secondary: #f0f1f4;
+    --secondary-foreground: #1a1b1e;
+    --muted: #e6e8ec;
+    --muted-foreground: #71727a;
+    --accent: #f0f1f4;
+    --accent-foreground: #1a1b1e;
+    --destructive: #ef4444;
+    --destructive-foreground: #f8fafc;
+    --border: #e2e8f0;
+    --input: #e2e8f0;
+    --ring: hsl(217, 100%, 61%);
+    --surface: rgba(255, 255, 255, 0.8);
+    --neutral: #e2e8f0;
+  }
+
+  /* Dark theme variables */
+  :root[data-theme="dark"] {
+    --background: #1a1b1e;
+    --foreground: #ecedee;
+    --card: rgba(32, 33, 36, 0.8);
+    --card-foreground: #ecedee;
+    --popover: #202124;
+    --popover-foreground: #ecedee;
+    --primary: hsl(217, 100%, 61%);
+    --primary-foreground: #ffffff;
+    --secondary: #2d2e32;
+    --secondary-foreground: #ecedee;
+    --muted: #2d2e32;
+    --muted-foreground: #a1a1aa;
+    --accent: #2d2e32;
+    --accent-foreground: #ecedee;
+    --destructive: #ef4444;
+    --destructive-foreground: #f8fafc;
+    --border: #3f3f46;
+    --input: #3f3f46;
+    --ring: hsl(217, 100%, 61%);
+    --surface: rgba(32, 33, 36, 0.8);
+    --neutral: #3f3f46;
+  }
+
+  /* Default to dark theme if no preference is set */
+  :root {
+    --background: #1a1b1e;
+    --foreground: #ecedee;
+    --card: rgba(32, 33, 36, 0.8);
+    --card-foreground: #ecedee;
+    --popover: #202124;
+    --popover-foreground: #ecedee;
+    --primary: hsl(217, 100%, 61%);
+    --primary-foreground: #ffffff;
+    --secondary: #2d2e32;
+    --secondary-foreground: #ecedee;
+    --muted: #2d2e32;
+    --muted-foreground: #a1a1aa;
+    --accent: #2d2e32;
+    --accent-foreground: #ecedee;
+    --destructive: #ef4444;
+    --destructive-foreground: #f8fafc;
+    --border: #3f3f46;
+    --input: #3f3f46;
+    --ring: hsl(217, 100%, 61%);
+    --surface: rgba(32, 33, 36, 0.8);
+    --neutral: #3f3f46;
+  }
+
   * {
     @apply border-border;
   }
 
   body {
     @apply font-sans antialiased bg-background text-foreground;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 }
