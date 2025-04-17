@@ -159,8 +159,7 @@ const Hero = () => {
             </h2>
 
             <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-md">
-              I craft interactive experiences and digital solutions with modern
-              web technologies and creative 3D visualizations.
+              I'm a React/Next.js developer from Pokhara, Nepal, focused on building sleek, high-performance websites and web apps.
             </p>
 
             <div className="flex space-x-4">
